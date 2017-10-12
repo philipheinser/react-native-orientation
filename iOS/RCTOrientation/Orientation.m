@@ -41,7 +41,7 @@ static UIInterfaceOrientationMask _orientation = UIInterfaceOrientationMaskAllBu
                                               body:@{@"specificOrientation": [self getSpecificOrientationStr:orientation]}];
 
   [self.bridge.eventDispatcher sendDeviceEventWithName:@"orientationDidChange"
-                                              body:@{@"orientation": [self getOrientationStr:orientation]}];
+                                              body:@{@"orientation": [self getOrientationStr:UIDeviceOrientationUnknown]}];
 
 }
 
@@ -134,8 +134,7 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(getOrientation:(RCTResponseSenderBlock)callback)
 {
-  UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-  NSString *orientationStr = [self getOrientationStr:orientation];
+  NSString *orientationStr = [self getOrientationStr:UIDeviceOrientationUnknown];
   callback(@[[NSNull null], orientationStr]);
 }
 
@@ -217,7 +216,7 @@ RCT_EXPORT_METHOD(unlockAllOrientations)
 {
 
   UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-  NSString *orientationStr = [self getOrientationStr:orientation];
+  NSString *orientationStr = [self getOrientationStr:UIDeviceOrientationUnknown];
 
   return @{
     @"initialOrientation": orientationStr
